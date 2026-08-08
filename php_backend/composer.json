@@ -1,0 +1,11 @@
+{
+    "name": "jaygurudev/php_backend",
+    "autoload": {
+        "psr-4": {
+            "Jaygurudev\\PhpBackend\\": "src/"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
