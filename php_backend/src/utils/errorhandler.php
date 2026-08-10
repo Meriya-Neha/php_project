@@ -7,20 +7,20 @@ class ErrorHandler
         error_log('ERROR: ' . $err->getMessage());
 
         if ($err instanceof InvalidRequestException) {
-            ResponseHelper::send(ResponseHelper::invalidRequest($err->getMessage()));
+            ResponseHelper::InvalidRequest($err->getMessage());
             return;
         }
 
         if ($err instanceof NotFoundException) {
-            ResponseHelper::send(ResponseHelper::notFound($err->getMessage()));
+            ResponseHelper::notFound($err->getMessage());
             return;
         }
 
-        if ($err instanceof UnAuthorizeException) {
-            ResponseHelper::send(ResponseHelper::unauthorized($err->getMessage()));
+        if ($err instanceof UnauthorizedException) {
+            ResponseHelper::unauthorized($err->getMessage());
             return;
         }
 
-        ResponseHelper::send(ResponseHelper::internalServerError());
+        ResponseHelper::serverError('Internal Server Error');
     }
 }

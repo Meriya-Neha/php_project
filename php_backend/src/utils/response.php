@@ -14,49 +14,47 @@ class Response {
 }
 
 
-class ResponseHelper{
-    public static function Ok(string $message = "ok"):Response{
-        return new Response(200, true, $message);
-    }
-
-    public static function Created(string $message = "created"):Response{
-        return new Response(201, true, $message);
-    }
-
-    public static function Updated(string $message = "updated"):Response{
-        return new Response(200, true, $message);
-    }
-
-    public static function Deleted(string $message = "deleted"):Response{
-        return new Response(200, true, $message);
-    }
-
-    public static function BadRequest(string $message = "bad request"):Response{
-        return new Response(400, false, $message);
-    }
-
-    public static function Unauthorized(string $message = "unauthorized"):Response{
-        return new Response(401, false, $message);
-    }
-
-    public static function NotFound(string $message = "not found"):Response{
-        return new Response(404, false, $message);
-    }
-
-    public static function InternalServerError(string $message = "internal server error"):Response{
-        return new Response(500, false, $message);
-    }  
-    
-    public function GeneralResponse($meta , $data=null){
-        http_response_code($meta['code']);
+class ResponseHelper
+{
+    public static function GeneralResponse(int $code, bool $status, string $message): void
+    {
+        http_response_code($code);
         header('Content-Type: application/json');
-        
-        $response = [
-            'status' => $meta['status'],
-            'message' => $meta['message'],
-            'data' => $data
-        ];
-        return json_encode($response);
+        echo json_encode([
+            'status'  => $status,
+            'message' => $message,
+        ]);
+    }
+
+    public static function created(string $message, mixed $data = null): void
+    {
+        self::GeneralResponse(201, true, $message);
+    }
+
+    public static function ok(string $message,mixed $data):void
+    {
+        self::GeneralResponse(200, true, $message);
+    }
+
+    public static function InvalidRequest(string $message): void
+    {
+        self::GeneralResponse(400, false, $message);
+    }
+
+    public static function notFound(string $message): void
+    {
+        self::GeneralResponse(404, false, $message);
+    }
+
+    public static function unauthorized(string $message): void
+    {
+        self::GeneralResponse(401, false, $message);
+    }
+
+    public static function serverError(string $message): void
+    {
+        self::GeneralResponse(500, false, $message);
     }
 }
+
 ?>

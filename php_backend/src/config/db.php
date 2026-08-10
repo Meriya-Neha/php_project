@@ -1,26 +1,29 @@
 <?php
- use Dotenv\Dotenv;
+use Dotenv\Dotenv;
 
-require __DIR__ . '/../../vendor/autoload.php';
-$dotenv=Dotenv::createImmutable(__DIR__ . '/../../');
+require_once __DIR__ . '/../../vendor/autoload.php';
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
-$host = $_ENV['DB_HOST'];
-$user= $_ENV['DB_USER'];
-$password= $_ENV['DB_PASSWORD'];
-$database = $_ENV['DB_NAME'];
+class Database {
+    private static ?PDO $conn = null;
 
-try{
-    $conn=new PDO("mysql:host=$host;database=$database",$user,$password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    echo "Database connection successful";
+    public static function getConnection(): PDO
+    {
+        if (self::$conn === null) {
+            $host = 'localhost';
+            $user = 'root';
+            $password = '';
+            $database = 'php_login_db';
 
+            try {
+                self::$conn = new PDO("mysql:host=$host;dbname=$database", $user, $password);
+                self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die("Database connection failed: " . $e->getMessage());
+            }
+        }
+
+        return self::$conn;
+    }
 }
-catch(PDOException $e){
-    die("Database connection failed: " . $e->getMessage());
-}
-
-
-
-
-?>

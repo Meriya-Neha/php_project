@@ -1,10 +1,15 @@
 {
-    "name": "jaygurudev/php_backend",
+    "name": "dell/php_backend",
     "autoload": {
         "psr-4": {
-            "Jaygurudev\\PhpBackend\\": "src/"
+            "Dell\\PhpBackend\\": "src/"
         }
     },
+    "authors": [
+        {
+            "name": "meriya neha"
+        }
+    ],
     "require": {
         "vlucas/phpdotenv": "^5.6"
     }

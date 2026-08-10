@@ -1,9 +1,9 @@
 <?php
 
     class BaseException extends Exception {
-        public $statusCode;
+        public $statusCode=0;
 
-        public function __construct($message, $statusCode) {
+        public function __construct(string $message, int $statusCode) {
             parent::__construct($message);
             $this->statusCode = $statusCode;
         }
@@ -14,7 +14,7 @@
         }
     }
 
-    class InvalidInputException extends BaseException {
+    class InvalidRequestException extends BaseException {
         public function __construct($message = "Invalid input") {
             parent::__construct($message, 400);
         }
