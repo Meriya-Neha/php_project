@@ -4,7 +4,10 @@
     $router=new Router();
 
     $router->post('/register',[usercontroller::class,'createUser']);
-    $router->get('/users',[usercontroller::class,'getById']);
+    $router->post('/users',[usercontroller::class,'getById']);
+
+    
+
 
     return $router; 
 ?>

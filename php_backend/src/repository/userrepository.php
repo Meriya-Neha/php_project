@@ -31,14 +31,14 @@ class userrepository{
        
     }
 
-    public function findByEmail(array $data): array
-    {
-        $stmt = $this->db->prepare('SELECT * FROM users WHERE email = :email');
-        $stmt->execute(['email' => $data['email']]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+   public function findByEmail(string $email): array
+{
+    $stmt = $this->db->prepare('SELECT * FROM users WHERE email = :email');
+    $stmt->execute(['email' => $email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $user;
-    }
+    return $user ?: [];
+}
 
 //     public function findById(int $id): ?array
 //     {

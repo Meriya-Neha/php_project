@@ -15,7 +15,8 @@ private Userservice $userservice;
  public function createUser(): void
     {
         $data = json_decode(file_get_contents('php://input'), true) ?? [];
-        echo "Received data: " . json_encode($data) . "\n"; // Debugging line
+        // echo "Received data: " . json_encode($data) . "\n"; 
+        // Debugging line
         try {
         $user = $this->userservice->createUser($data);
         ResponseHelper::created('User created', $user);
@@ -27,11 +28,10 @@ private Userservice $userservice;
 public function getById(): void
 {
     try{
-        $data=$this->userservice->getById();
         $input = json_decode(file_get_contents('php://input'), true);
         echo json_encode($input);
         $login=$this->userservice->getById($input);
-        // ResponseHelper::ok('User found', $data);
+        ResponseHelper::ok('User found', $login);
     } catch (NotFoundException $e) {
         ResponseHelper::GeneralResponse(404, false, $e->getMessage());
     }

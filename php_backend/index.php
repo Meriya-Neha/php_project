@@ -1,4 +1,5 @@
 <?php 
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -17,3 +18,6 @@ set_error_handler(function ($severity, $message, $file, $line) {
 
 $router = require_once __DIR__ . '/src/routes/userroutes.php';
 $router->resolve();
+
+
+?>
