@@ -5,8 +5,10 @@
 
     $router->post('/register',[usercontroller::class,'createUser']);
     $router->post('/users',[usercontroller::class,'getById']);
+    $router->post('/email-varification',[usercontroller::class,'email_varification']);
+    $router->post('/otp-varification',[usercontroller::class,'otpVarification']);
 
-    
+
 
 
     return $router; 

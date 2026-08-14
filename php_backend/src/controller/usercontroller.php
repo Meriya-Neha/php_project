@@ -15,10 +15,12 @@ private Userservice $userservice;
  public function createUser(): void
     {
         $data = json_decode(file_get_contents('php://input'), true) ?? [];
-        // echo "Received data: " . json_encode($data) . "\n"; 
+        // echo $data[0];
+        echo "Received data: " . json_encode($data) . "\n"; 
         // Debugging line
         try {
         $user = $this->userservice->createUser($data);
+        // echo($user);
         ResponseHelper::created('User created', $user);
     } catch (InvalidRequestException $e) {
         ResponseHelper::InvalidRequest($e->getMessage());
@@ -28,12 +30,42 @@ private Userservice $userservice;
 public function getById(): void
 {
     try{
+        
         $input = json_decode(file_get_contents('php://input'), true);
-        echo json_encode($input);
+        echo "receive data".json_encode($input);
+        echo json_encode("hello ");
         $login=$this->userservice->getById($input);
+        
+        echo ("hello1");
         ResponseHelper::ok('User found', $login);
     } catch (NotFoundException $e) {
-        ResponseHelper::GeneralResponse(404, false, $e->getMessage());
+        ResponseHelper::GeneralResponse($e->getMessage());
+    }
+}
+
+public function email_varification():void
+{
+    try{
+        $input=json_decode(file_get_contents('php://input'),true);
+         echo "receive data".json_encode($input);
+        $email_varification=$this->userservice->email_varification($input);
+        ResponseHelper::ok('OTP send',$input);
+    }
+    catch(e){
+        echo("Error in controller");
+
+    }
+}
+
+public function otpVarification():void
+{
+    try{
+        $input=json_decode(file_get_contents('php://input'),true);
+        $otp_varification=$this->userservice->otpVarification($input);
+        ResponseHelper::ok('otp varify successfully',$input);
+    }
+    catch(e){
+        echo ("error in controller");
     }
 }
 

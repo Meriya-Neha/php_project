@@ -1,13 +1,16 @@
-<?php
+ <?php
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
     require 'vendor/autoload.php';
 
+    function send_custom_email($toAddress,$bodyText){
+
     $mail=new PHPMailer(true);
+    
 
     try{
-
+        
           $mail->isSMTP();
           $mail->Host = 'smtp.gmail.com';
           $mail->SMTPAuth =true;
@@ -18,12 +21,12 @@
 
 
           $mail->setFrom('backendtrainee01@gmail.com', 'Meriya Neha');
-          $mail->addAddress('backendtrainee01@gmail.com', 'Meriya Neha'); 
+          $mail->addAddress($toAddress); 
 
 
-           $mail->isHTML(true);                                  // Set email format to HTML
+           $mail->isHTML(true);                                  
            $mail->Subject = 'Authenticated SMTP Email';
-           $mail->Body    = 'This email is sent using <b>PHPMailer via SMTP</b>!';
+           $mail->Body    = ($bodyText);
            $mail->AltBody = 'This is the plain text version for non-HTML email clients';
 
            $mail->send();
@@ -31,5 +34,6 @@
     }
     catch(Exception $e){
        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
     }
 ?>

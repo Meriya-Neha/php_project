@@ -18,8 +18,8 @@ class Router {
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-        echo "DEBUG: method=$method uri=$uri\n";
-    echo "DEBUG: registered routes = " . json_encode($this->routes) . "\n";
+    //echo "DEBUG: method=$method uri=$uri\n";
+    // echo "DEBUG: registered routes = " . json_encode($this->routes) . "\n";
 
 
         if (!isset($this->routes[$method][$uri])) {
@@ -27,10 +27,7 @@ class Router {
             echo json_encode(['error' => 'Route not found']);
             return;
         }
-
         $callback = $this->routes[$method][$uri];
-
-        // callback is like [UserController::class, 'add_user']
         [$class, $methodName] = $callback;
         $controller = new $class();
         $controller->$methodName();
